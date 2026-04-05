@@ -22,13 +22,13 @@ const menu: Pizza[] = [
 
 let cashInRegister: number = 100;
 let newOrderId: number = 1;
-let nextPizzaId : number = 5;
+let nextPizzaId: number = 5;
 const orderQueue: Order[] = [];
 
 // First task is to create an utility function named "addNewPizza" that takes a pizza object and adds it to the menu
 
-const addNewPizza = (pizzaObject: Omit<Pizza , "id">) : void => {
-    menu.push({id : nextPizzaId++, ...pizzaObject});
+const addNewPizza = (pizzaObject: Omit<Pizza, "id">): void => {
+    menu.push({ id: nextPizzaId++, ...pizzaObject });
 }
 
 /* Second task is to write a utility function called placeOrder that takes in the pizza name as argument : 
@@ -38,7 +38,7 @@ const addNewPizza = (pizzaObject: Omit<Pizza , "id">) : void => {
 4. returns the new object 
 */
 
-function placeOrder(pizzaName: string) : Pizza | undefined{
+function placeOrder(pizzaName: string): Pizza | undefined {
     // finds the pizza in the menu
     const pizzaFound: Pizza | undefined = menu.find((pizza) => {
         return pizzaName === pizza.name;
@@ -70,9 +70,9 @@ function completeOrder(orderId: number): Order | undefined {
             return order;
         };
     })
-    if(!pizzaFound){
+    if (!pizzaFound) {
         console.error("Pizza not found");
-    }else {
+    } else {
         return pizzaFound;
     }
 }
@@ -83,16 +83,16 @@ This identifier could either be of type string to accept pizza name
 OR coul dbe of type number to accept the pizza id
 */
 
-function getPizzaDetails(identifier: number | string) : Pizza | undefined {
+function getPizzaDetails(identifier: number | string): Pizza | undefined {
     // Working with pizza ID
     if (typeof (identifier) === "number") {
         const pizzaFound = menu.find((pizza) => {
             return pizza.id === identifier;
         })
-        if (!pizzaFound || typeof(pizzaFound) === "undefined") {
+        if (!pizzaFound || typeof (pizzaFound) === "undefined") {
             console.error("No such pizza exists");
         }
-        else{
+        else {
             return pizzaFound;
         }
     }
@@ -101,21 +101,27 @@ function getPizzaDetails(identifier: number | string) : Pizza | undefined {
         const pizzaFound = menu.find((pizza) => {
             return pizza.name.toLowerCase() === identifier.toLowerCase();
         })
-        if (!pizzaFound || typeof(pizzaFound) === "undefined") {
+        if (!pizzaFound || typeof (pizzaFound) === "undefined") {
             console.error("No such pizza exists");
         }
-        else{
+        else {
             return pizzaFound;
         }
-    }else {
-        throw new TypeError ("Parameter `identifier` must be string or number")
+    } else {
+        throw new TypeError("Parameter `identifier` must be string or number")
     }
 }
 
-addNewPizza({name: "Chicken BBQ", price: 20 });
-addNewPizza({name: "Veggie BBQ", price: 14 });
-addNewPizza({name: "Chicken Alfredo Pizza", price: 30 });
-addNewPizza({name: "Veggie Supreme", price: 10 });
+// After learning Generics -> Try and use it to add items to any array 
+function addToArray<T>(array: T[], item: T) {
+    array.push({ id: nextPizzaId++, ...item });
+    return item;
+}
+
+addNewPizza({ name: "Chicken BBQ", price: 20 });
+addNewPizza({ name: "Veggie BBQ", price: 14 });
+addNewPizza({ name: "Chicken Alfredo Pizza", price: 30 });
+addNewPizza({ name: "Veggie Supreme", price: 10 });
 
 placeOrder("Chicken Alfredo Pizza");
 placeOrder("Veggie Supreme");
@@ -127,3 +133,7 @@ console.log(completeOrder(2));
 console.log("\n--- Get pizza Details ---");
 console.log(getPizzaDetails(1));
 console.log(getPizzaDetails("Pepperoni"));
+
+console.log("\n--- Generic Add to Array function ---");
+console.log(addToArray<Pizza>(menu, {id: nextPizzaId++, name: "BBQ RANCH", price: 10 }));
+console.log(addToArray<Order>(orderQueue, {id: newOrderId++, pizza:{id: 9, name: "BBQ RANCH", price: 10 } , status : "completed"}));

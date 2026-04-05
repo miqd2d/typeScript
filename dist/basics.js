@@ -93,6 +93,11 @@ function getPizzaDetails(identifier) {
         throw new TypeError("Parameter `identifier` must be string or number");
     }
 }
+// After learning Generics -> Try and use it to add items to any array 
+function addToArray(array, item) {
+    array.push({ id: nextPizzaId++, ...item });
+    return item;
+}
 addNewPizza({ name: "Chicken BBQ", price: 20 });
 addNewPizza({ name: "Veggie BBQ", price: 14 });
 addNewPizza({ name: "Chicken Alfredo Pizza", price: 30 });
@@ -105,4 +110,7 @@ console.log(completeOrder(2));
 console.log("\n--- Get pizza Details ---");
 console.log(getPizzaDetails(1));
 console.log(getPizzaDetails("Pepperoni"));
+console.log("\n--- Generic Add to Array function ---");
+console.log(addToArray(menu, { id: nextPizzaId++, name: "BBQ RANCH", price: 10 }));
+console.log(addToArray(orderQueue, { id: newOrderId++, pizza: { id: 9, name: "BBQ RANCH", price: 10 }, status: "completed" }));
 //# sourceMappingURL=basics.js.map
