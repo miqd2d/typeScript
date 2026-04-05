@@ -27,7 +27,7 @@ const orderQueue: Order[] = [];
 
 // First task is to create an utility function named "addNewPizza" that takes a pizza object and adds it to the menu
 
-const addNewPizza = (pizzaObject: {name : string , price : number}) : void => {
+const addNewPizza = (pizzaObject: Omit<Pizza , "id">) : void => {
     menu.push({id : nextPizzaId++, ...pizzaObject});
 }
 
