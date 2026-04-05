@@ -4,6 +4,8 @@ type User = {
     role : "admin" | "customer" | "employee"
 }
 
+let currentID = 5;
+
 // type UpdatedUser = {
 //     id? : number,
 //     username? : string,
@@ -13,7 +15,7 @@ type User = {
 // Instead of using the above code you can simply use Partials
 type UpdatedUser = Partial<User>;           // This one keyword makes all the fields of User optional
 
-const User : User[] = [
+const Users : User[] = [
     {
         id : 1,
         username : "miqdad123",
@@ -37,7 +39,7 @@ const User : User[] = [
 ]
 
 function fetchUpdatedUser(id : number, updatedUser : UpdatedUser){
-    const userFound = User.find((user)=> user.id === id);
+    const userFound = Users.find((user)=> user.id === id);
     if(!userFound){
         console.error("No user Found...");
         return;
@@ -46,5 +48,23 @@ function fetchUpdatedUser(id : number, updatedUser : UpdatedUser){
     return userFound;
 }
 
+/*
+Create a new function addNewUser() that takes in the new user object without ID
+1. Create a new user object adn assign it an ID
+2. Spread in all the properties of the user in the object
+3. Set a type for this user
+4. Push the object in the User array and return the new user created
+*/
+
+function addNewUser(newUser : Omit<User , "id"> ) : User{
+    const newCreatedUser : User = {id : currentID++ , ...newUser};
+    Users.push(newCreatedUser);
+    return newCreatedUser;
+}   
+
 console.log(fetchUpdatedUser(1,{username : "miqd2d"}));
+console.log(addNewUser({username : "miqdad" , role : "customer"}));
+console.log("All users : ", Users);
+
+
 
