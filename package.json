@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/miqd2d/typeScript/issues"
   },
-  "homepage": "https://github.com/miqd2d/typeScript#readme"
+  "homepage": "https://github.com/miqd2d/typeScript#readme",
+  "dependencies": {
+    "typescript": "^6.0.2"
+  }
 }
